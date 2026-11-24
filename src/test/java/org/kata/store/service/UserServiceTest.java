@@ -30,6 +30,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
  */
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
+    private static final String USER_ID = "user-1";
+    private static final String FIRST_NAME = "Ana";
+    private static final String LAST_NAME = "García";
+
     @Mock
     private UserRepository userRepository;
 
@@ -43,7 +48,7 @@ class UserServiceTest {
     @Test
     void shouldSaveNewUser() {
         // Act
-        User user = userService.register("user-1", "Ana", "García");
+        User user = userService.register(USER_ID, FIRST_NAME, LAST_NAME);
 
         // Assert
         verify(userRepository).save(user);
@@ -52,25 +57,25 @@ class UserServiceTest {
     @Test
     void shouldRejectUserWithDuplicatedId() {
         // Arrange
-        when(userRepository.exists("user-1")).thenReturn(true);
+        when(userRepository.exists(USER_ID)).thenReturn(true);
 
         // Act
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> userService.register("user-1", "Ana", "García"));
+                () -> userService.register(USER_ID, FIRST_NAME, LAST_NAME));
 
         // Assert
-        assertEquals("User with id user-1 already exists", exception.getMessage());
+        assertEquals("User with id " + USER_ID + " already exists", exception.getMessage());
     }
 
     @Test
     void shouldNotSaveUserWithDuplicatedId() {
         // Arrange
-        when(userRepository.exists("user-1")).thenReturn(true);
+        when(userRepository.exists(USER_ID)).thenReturn(true);
 
         // Act
         assertThrows(IllegalArgumentException.class,
-                () -> userService.register("user-1", "Ana", "García"));
+                () -> userService.register(USER_ID, FIRST_NAME, LAST_NAME));
 
         // Assert
         verify(userRepository, never()).save(any());
