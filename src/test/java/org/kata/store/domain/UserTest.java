@@ -60,4 +60,18 @@ class UserTest {
         // Assert
         assertEquals("Last name is required", exception.getMessage());
     }
+
+    @Test
+    void shouldRejectNullName() {
+        // Arrange
+        String nullName = null;
+
+        // Act
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new User("user-1", nullName, "García"));
+
+        // Assert
+        assertEquals("First name is required", exception.getMessage());
+    }
 }
