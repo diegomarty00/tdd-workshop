@@ -21,6 +21,9 @@ public class UserService {
     }
 
     public User register(String id, String firstName, String lastName) {
+        if (userRepository.exists(id)) {
+            throw new IllegalArgumentException("User with id " + id + " already exists");
+        }
         User user = new User(id, firstName, lastName);
         userRepository.save(user);
         return user;
