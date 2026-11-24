@@ -48,4 +48,18 @@ class OrderTest {
         // Assert
         assertEquals(OrderStatus.PROCESSED, order.getStatus());
     }
+
+    @Test
+    void shouldNotSkipFromDraftToDispatched() {
+        // Arrange
+        Order order = new Order("order-1", "user-1", 50.0);
+
+        // Act
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> order.changeStatusTo(OrderStatus.DISPATCHED));
+
+        // Assert
+        assertEquals("Cannot change status from DRAFT to DISPATCHED", exception.getMessage());
+    }
 }
