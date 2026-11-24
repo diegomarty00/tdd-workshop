@@ -41,7 +41,7 @@ public class User {
     }
 
     private void setLastName(String lastName) {
-                if (lastName == null) {
+        if (lastName == null || lastName.isEmpty()) {
             throw new IllegalArgumentException("Last name is required");
         }
         this.lastName = lastName;
