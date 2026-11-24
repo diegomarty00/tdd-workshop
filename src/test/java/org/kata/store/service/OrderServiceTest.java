@@ -93,4 +93,18 @@ class OrderServiceTest {
         // Assert
         verify(orderRepository, never()).save(any());
     }
+
+    @Test
+    void shouldAdvanceOrderToNextStatus() {
+        // Arrange
+        Order order = new Order(ORDER_ID, USER_ID, VALID_PRICE);
+        when(orderRepository.findById(ORDER_ID)).thenReturn(order);
+
+        // Act
+        orderService.changeStatus(ORDER_ID, OrderStatus.PROCESSED);
+
+        // Assert
+        assertEquals(OrderStatus.PROCESSED, order.getStatus());
+        verify(orderRepository).save(order);
+    }
 }
