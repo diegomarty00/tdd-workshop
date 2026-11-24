@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /*
@@ -61,5 +62,23 @@ class OrderTest {
 
         // Assert
         assertEquals("Cannot change status from DRAFT to DISPATCHED", exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @EnumSource(OrderStatus.class)
+    void shouldNotChangeStatusWhenDelivered(OrderStatus targetStatus) {
+        // Arrange
+        Order order = new Order("order-1", "user-1", 50.0);
+        order.changeStatusTo(OrderStatus.PROCESSED);
+        order.changeStatusTo(OrderStatus.DISPATCHED);
+        order.changeStatusTo(OrderStatus.DELIVERED);
+
+        // Act
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> order.changeStatusTo(targetStatus));
+
+        // Assert
+        assertEquals("Delivered order cannot change status", exception.getMessage());
     }
 }
