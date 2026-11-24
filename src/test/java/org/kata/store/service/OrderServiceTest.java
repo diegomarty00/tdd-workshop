@@ -107,4 +107,18 @@ class OrderServiceTest {
         assertEquals(OrderStatus.PROCESSED, order.getStatus());
         verify(orderRepository).save(order);
     }
+
+    @Test
+    void shouldRejectInvalidStatusTransition() {
+        // Arrange
+        Order order = new Order(ORDER_ID, USER_ID, VALID_PRICE);
+        when(orderRepository.findById(ORDER_ID)).thenReturn(order);
+
+        // Act
+        assertThrows(IllegalStateException.class,
+                () -> orderService.changeStatus(ORDER_ID, OrderStatus.DISPATCHED));
+
+        // Assert
+        verify(orderRepository, never()).save(any());
+    }
 }
