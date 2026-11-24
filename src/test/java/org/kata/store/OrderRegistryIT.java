@@ -1,5 +1,6 @@
 package org.kata.store;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -31,8 +32,6 @@ class OrderRegistryIT {
     private static final String USER_ID = "user-1";
     private static final String FIRST_NAME = "Ana";
     private static final String LAST_NAME = "García";
-
-    
 
     private UserService userService;
     private OrderService orderService;
@@ -75,4 +74,13 @@ class OrderRegistryIT {
         assertEquals("User with id " + USER_ID + " already exists", exception.getMessage());
     }
 
+    @Test
+    void shouldNotCreateOrderForUnregisteredUser() {
+        // Act
+        assertThrows(IllegalArgumentException.class,
+                () -> orderService.createOrder(ORDER_ID, USER_ID, 50.0));
+
+        // Assert
+        assertNull(orderRepository.findById(ORDER_ID));
+    }
 }
