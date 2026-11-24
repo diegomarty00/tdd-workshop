@@ -31,7 +31,9 @@ public class OrderService {
         if (!userRepository.exists(userId)) {
             throw new IllegalArgumentException("User " + userId + " does not exist");
         }
-        return new Order(orderId, userId, price);
+        Order order = new Order(orderId, userId, price);
+        orderRepository.save(order);
+        return order;
     }
 
 }
