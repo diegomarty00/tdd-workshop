@@ -44,6 +44,9 @@ public class Order {
     }
 
     public void changeStatusTo(OrderStatus newStatus) {
+        if (status == OrderStatus.DELIVERED) {
+            throw new IllegalStateException("Delivered order cannot change status");
+        }
         if (status == OrderStatus.DRAFT && newStatus != OrderStatus.PROCESSED) {
             throw new IllegalStateException("Cannot change status from " + status + " to " + newStatus);
         }
