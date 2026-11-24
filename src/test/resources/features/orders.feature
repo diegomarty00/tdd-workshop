@@ -10,13 +10,14 @@ Feature: Registro de pedidos
     When el usuario "user-1" crea el pedido "order-1" de 50.0 euros
     Then el pedido "order-1" está en estado "DRAFT"
 
-#   Scenario Outline: El pedido avanza por sus estados
-#     Given un pedido en estado "<actual>"
-#     When avanzo el pedido
-#     Then el pedido está en estado "<siguiente>"
-#
-#     Examples:
-#       | actual     | siguiente  |
-#       | DRAFT      | PROCESSED  |
-#       | PROCESSED  | DISPATCHED |
-#       | DISPATCHED | DELIVERED  |
+  Scenario Outline: El pedido avanza por sus estados
+    Given un usuario con id "user-1" llamado "Ana" "García"
+    And un pedido "order-1" del usuario "user-1" en estado "<actual>"
+    When avanzo el pedido "order-1" a "<siguiente>"
+    Then el pedido "order-1" está en estado "<siguiente>"
+
+    Examples:
+      | actual     | siguiente  |
+      | DRAFT      | PROCESSED  |
+      | PROCESSED  | DISPATCHED |
+      | DISPATCHED | DELIVERED  |
