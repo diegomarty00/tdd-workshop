@@ -43,4 +43,8 @@ public class Order {
         return price;
     }
 
+    public void changeStatusTo(OrderStatus newStatus) {
+        this.status = newStatus;
+    }
+
 }
