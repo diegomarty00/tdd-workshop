@@ -1,5 +1,6 @@
 package org.kata.store;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,20 @@ class OrderRegistryIT {
 
         // Assert
         assertEquals(OrderStatus.DELIVERED, orderRepository.findById("order-1").getStatus());
+    }
+
+    @Test
+    void shouldRejectSecondUserWithSameId() {
+        // Arrange
+        userService.register("user-1", "Ana", "García");
+
+        // Act
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> userService.register("user-1", "Luis", "Pérez"));
+
+        // Assert
+        assertEquals("User with id user-1 already exists", exception.getMessage());
     }
 
 }
