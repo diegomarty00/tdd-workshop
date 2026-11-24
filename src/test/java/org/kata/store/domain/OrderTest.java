@@ -1,8 +1,11 @@
 package org.kata.store.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /*
  * TODO: Tests unitarios de Order y de su flujo de estados.
@@ -32,5 +35,17 @@ class OrderTest {
 
         // Assert
         assertEquals(OrderStatus.DRAFT, status);
+    }
+
+    @Test
+    void shouldMoveFromDraftToProcessed() {
+        // Arrange
+        Order order = new Order("order-1", "user-1", 50.0);
+
+        // Act
+        order.changeStatusTo(OrderStatus.PROCESSED);
+
+        // Assert
+        assertEquals(OrderStatus.PROCESSED, order.getStatus());
     }
 }
