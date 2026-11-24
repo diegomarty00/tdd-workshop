@@ -10,12 +10,15 @@ package org.kata.store.domain;
  *   - Si no se cumple, se lanza una excepción con un mensaje claro.
  */
 public class User {
-    
+
     private String id;
     private String firstName;
     private String lastName;
 
     public User(String id, String firstName, String lastName) {
+        if (firstName.isEmpty()) {
+            throw new IllegalArgumentException("First name is required");
+        }
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
