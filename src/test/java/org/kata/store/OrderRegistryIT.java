@@ -27,6 +27,13 @@ import org.kata.store.service.*;
  */
 class OrderRegistryIT {
 
+    private static final String ORDER_ID = "order-1";
+    private static final String USER_ID = "user-1";
+    private static final String FIRST_NAME = "Ana";
+    private static final String LAST_NAME = "García";
+
+    
+
     private UserService userService;
     private OrderService orderService;
     private OrderRepository orderRepository;
@@ -42,30 +49,30 @@ class OrderRegistryIT {
     @Test
     void shouldTakeOrderFromDraftToDelivered() {
         // Arrange
-        userService.register("user-1", "Ana", "García");
-        orderService.createOrder("order-1", "user-1", 50.0);
+        userService.register(USER_ID, FIRST_NAME, LAST_NAME);
+        orderService.createOrder(ORDER_ID, USER_ID, 50.0);
 
         // Act
-        orderService.changeStatus("order-1", OrderStatus.PROCESSED);
-        orderService.changeStatus("order-1", OrderStatus.DISPATCHED);
-        orderService.changeStatus("order-1", OrderStatus.DELIVERED);
+        orderService.changeStatus(ORDER_ID, OrderStatus.PROCESSED);
+        orderService.changeStatus(ORDER_ID, OrderStatus.DISPATCHED);
+        orderService.changeStatus(ORDER_ID, OrderStatus.DELIVERED);
 
         // Assert
-        assertEquals(OrderStatus.DELIVERED, orderRepository.findById("order-1").getStatus());
+        assertEquals(OrderStatus.DELIVERED, orderRepository.findById(ORDER_ID).getStatus());
     }
 
     @Test
     void shouldRejectSecondUserWithSameId() {
         // Arrange
-        userService.register("user-1", "Ana", "García");
+        userService.register(USER_ID, FIRST_NAME, LAST_NAME);
 
         // Act
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> userService.register("user-1", "Luis", "Pérez"));
+                () -> userService.register(USER_ID, "Luis", "Pérez"));
 
         // Assert
-        assertEquals("User with id user-1 already exists", exception.getMessage());
+        assertEquals("User with id " + USER_ID + " already exists", exception.getMessage());
     }
 
 }
