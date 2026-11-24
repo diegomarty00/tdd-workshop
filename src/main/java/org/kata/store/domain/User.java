@@ -30,7 +30,7 @@ public class User {
     }
 
     private void setFirstName(String firstName) {
-        if (firstName.isEmpty()) {
+        if (firstName == null || firstName.isEmpty()) {
             throw new IllegalArgumentException("First name is required");
         }
         this.firstName = firstName;
