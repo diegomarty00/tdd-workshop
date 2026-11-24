@@ -18,7 +18,7 @@ public class User {
     public User(String id, String firstName, String lastName) {
         this.id = id;
         setFirstName(firstName);
-        this.lastName = lastName;
+        setLastName(lastName);
     }
 
     public String getId() {
@@ -38,5 +38,12 @@ public class User {
 
     public String getLastName() {
         return lastName;
+    }
+
+    private void setLastName(String lastName) {
+                if (lastName == null) {
+            throw new IllegalArgumentException("Last name is required");
+        }
+        this.lastName = lastName;
     }
 }
