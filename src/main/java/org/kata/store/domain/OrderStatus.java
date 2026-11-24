@@ -22,4 +22,8 @@ public enum OrderStatus {
     boolean canMoveTo(OrderStatus target) {
         return target.ordinal() == this.ordinal() + 1;
     }
+
+    boolean isFinal() {
+        return this == DELIVERED;
+    }
 }
