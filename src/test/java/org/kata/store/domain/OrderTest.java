@@ -9,8 +9,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 /*
- * TODO: Tests unitarios de Order y de su flujo de estados.
- *
  * Empieza aquí: es la parte sin dependencias, la más fácil para arrancar el ciclo Red -> Green -> Refactor.
  *
  * Ideas de tests (uno por comportamiento, de uno en uno):

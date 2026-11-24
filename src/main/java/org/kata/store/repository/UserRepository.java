@@ -3,8 +3,6 @@ package org.kata.store.repository;
 import org.kata.store.domain.User;
 
 /*
- * TODO: Almacén de usuarios.
- *
  * Es una dependencia de los servicios: en los tests unitarios de los servicios NO uses una implementación
  * real, sustitúyela por un doble de prueba (mock o stub de Mockito, o un fake escrito a mano).
  *

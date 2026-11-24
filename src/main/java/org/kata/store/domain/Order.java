@@ -1,8 +1,6 @@
 package org.kata.store.domain;
 
 /*
- * TODO: Pedido de la tienda.
- *
  * Datos: id de pedido, id de usuario, estado (OrderStatus) y precio.
  *
  * Requisitos (escribe primero el test de cada uno):

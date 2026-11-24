@@ -18,8 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /*
- * TODO: Tests unitarios de OrderService con Mockito.
- *
  * UserRepository y OrderRepository son dependencias: se sustituyen por dobles de prueba.
  *
  * Ideas de tests:

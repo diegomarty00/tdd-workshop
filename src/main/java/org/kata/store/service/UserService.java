@@ -4,8 +4,6 @@ import org.kata.store.domain.User;
 import org.kata.store.repository.UserRepository;
 
 /*
- * TODO: Alta de usuarios.
- *
  * Requisitos (escribe primero el test de cada uno):
  *   - Se puede dar de alta un usuario con id, nombre y apellidos.
  *   - No se puede dar de alta un usuario con un id que ya existe: se lanza una excepción.

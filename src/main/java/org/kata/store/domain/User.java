@@ -1,8 +1,6 @@
 package org.kata.store.domain;
 
 /*
- * TODO: Usuario de la tienda.
- *
  * Datos: id, nombre y apellidos.
  *
  * Requisitos (escribe primero el test de cada uno):

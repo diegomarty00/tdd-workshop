@@ -119,6 +119,6 @@ Tenéis las diapositivas subidas en la raíz de este proyecto ;)
 
 Tienes ejemplos resueltos de Mockito, Cucumber y Testcontainers en la rama `feat/tennis` de este repositorio.
 
-## Mi captura de SonarQube
+## Mis capturas de SonarQube
 
-<!-- Sustituye esta línea por tu captura: ![Cobertura en SonarQube](docs/sonar.png) -->
+![Cobertura en SonarQube](SonarQube.png)

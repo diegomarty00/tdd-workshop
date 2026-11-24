@@ -5,8 +5,6 @@ import org.kata.store.domain.OrderStatus;
 import org.kata.store.repository.*;
 
 /*
- * TODO: Registro de pedidos.
- *
  * Requisitos (escribe primero el test de cada uno):
  *   - Crear un pedido para un usuario: queda en estado DRAFT.
  *   - No se puede crear un pedido para un usuario que no existe: se lanza una excepción.

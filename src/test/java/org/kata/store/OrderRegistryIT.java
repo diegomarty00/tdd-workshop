@@ -12,8 +12,6 @@ import org.kata.store.repository.memory.*;
 import org.kata.store.service.*;
 
 /*
- * TODO: Prueba de integración (repositorio en memoria obligatorio, TestContainers opcional).
- *
  * A diferencia de los tests unitarios, aquí NO se usan mocks: se conectan las piezas reales
  * (servicios + repositorios) y se prueba un flujo completo. Por ejemplo:
  *

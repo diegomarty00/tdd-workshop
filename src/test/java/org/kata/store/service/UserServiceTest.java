@@ -16,8 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 /*
- * TODO: Tests unitarios de UserService con Mockito.
- *
  * El UserRepository es una dependencia: aquí se sustituye por un mock, nunca por la implementación real.
  *
  * Ideas de tests:
