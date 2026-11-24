@@ -1,5 +1,7 @@
 package org.kata.store.service;
 
+import org.kata.store.repository.UserRepository;
+
 /*
  * TODO: Alta de usuarios.
  *
@@ -10,4 +12,10 @@ package org.kata.store.service;
  * Pista: recibe el UserRepository por constructor. Así, en el test, puedes pasarle un mock.
  */
 public class UserService {
+
+    private UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 }

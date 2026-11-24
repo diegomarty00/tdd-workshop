@@ -14,4 +14,33 @@ package org.kata.store.domain;
  * Un @ParameterizedTest te ahorra repetir tests casi iguales.
  */
 public class Order {
+
+    private String id;
+    private String userId;
+    private OrderStatus status;
+    private double price;
+
+    public Order(String id, String userId, double price) {
+        this.id = id;
+        this.userId = userId;
+        this.price = price;
+        this.status = OrderStatus.DRAFT;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
 }

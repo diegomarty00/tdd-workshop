@@ -1,5 +1,7 @@
 package org.kata.store.service;
 
+import org.kata.store.repository.*;
+
 /*
  * TODO: Registro de pedidos.
  *
@@ -15,4 +17,13 @@ package org.kata.store.service;
  *   - Mock: verify(orderRepository).save(...) para comprobar que el pedido se guarda.
  */
 public class OrderService {
+
+    private UserRepository userRepository;
+    private OrderRepository orderRepository;
+
+    public OrderService(UserRepository userRepository, OrderRepository orderRepository) {
+        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
+    }
+
 }
