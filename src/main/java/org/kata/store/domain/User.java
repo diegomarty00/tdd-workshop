@@ -16,11 +16,8 @@ public class User {
     private String lastName;
 
     public User(String id, String firstName, String lastName) {
-        if (firstName.isEmpty()) {
-            throw new IllegalArgumentException("First name is required");
-        }
         this.id = id;
-        this.firstName = firstName;
+        setFirstName(firstName);
         this.lastName = lastName;
     }
 
@@ -30,6 +27,13 @@ public class User {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    private void setFirstName(String firstName) {
+        if (firstName.isEmpty()) {
+            throw new IllegalArgumentException("First name is required");
+        }
+        this.firstName = firstName;
     }
 
     public String getLastName() {
