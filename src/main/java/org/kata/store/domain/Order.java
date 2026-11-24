@@ -21,6 +21,9 @@ public class Order {
     private double price;
 
     public Order(String id, String userId, double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0");
+        }
         this.id = id;
         this.userId = userId;
         this.price = price;
