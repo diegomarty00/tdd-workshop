@@ -1,5 +1,6 @@
 package org.kata.store.service;
 
+import org.kata.store.domain.User;
 import org.kata.store.repository.UserRepository;
 
 /*
@@ -17,5 +18,11 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public User register(String id, String firstName, String lastName) {
+        User user = new User(id, firstName, lastName);
+        userRepository.save(user);
+        return user;
     }
 }
