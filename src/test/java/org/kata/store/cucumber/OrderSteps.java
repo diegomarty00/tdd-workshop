@@ -39,4 +39,20 @@ public class OrderSteps {
     public void elPedidoEstaEnEstado(String orderId, String expectedStatus) {
         assertEquals(OrderStatus.valueOf(expectedStatus), orderRepository.findById(orderId).getStatus());
     }
+
+    @Given("un pedido {string} del usuario {string} en estado {string}")
+    public void unPedidoEnEstado(String orderId, String userId, String status) {
+        orderService.createOrder(orderId, userId, 50.0);
+        OrderStatus target = OrderStatus.valueOf(status);
+        for (OrderStatus next : OrderStatus.values()) {
+            if (next != OrderStatus.DRAFT && next.compareTo(target) <= 0) {
+                orderService.changeStatus(orderId, next);
+            }
+        }
+    }
+
+    @When("avanzo el pedido {string} a {string}")
+    public void avanzoElPedido(String orderId, String status) {
+        orderService.changeStatus(orderId, OrderStatus.valueOf(status));
+    }
 }
