@@ -81,4 +81,20 @@ class OrderTest {
         // Assert
         assertEquals("Delivered order cannot change status", exception.getMessage());
     }
+
+    @ParameterizedTest
+    @ValueSource(doubles = { 0, -0.01, -1, -100 })
+    void shouldRejectPriceLowerOrEqualThanZero(double invalidPrice) {
+        // Arrange
+        String orderId = "order-1";
+        String userId = "user-1";
+
+        // Act
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Order(orderId, userId, invalidPrice));
+
+        // Assert
+        assertEquals("Price must be greater than 0", exception.getMessage());
+    }
 }
