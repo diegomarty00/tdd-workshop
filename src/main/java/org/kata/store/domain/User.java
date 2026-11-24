@@ -17,8 +17,8 @@ public class User {
 
     public User(String id, String firstName, String lastName) {
         this.id = id;
-        setFirstName(firstName);
-        setLastName(lastName);
+        this.firstName = isNullOrEmpty(firstName, "First name is required");
+        this.lastName = isNullOrEmpty(lastName, "Last name is required");
     }
 
     public String getId() {
@@ -29,21 +29,14 @@ public class User {
         return firstName;
     }
 
-    private void setFirstName(String firstName) {
-        if (firstName == null || firstName.isEmpty()) {
-            throw new IllegalArgumentException("First name is required");
-        }
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
-    private void setLastName(String lastName) {
-        if (lastName == null || lastName.isEmpty()) {
-            throw new IllegalArgumentException("Last name is required");
+    private static String isNullOrEmpty(String text, String message) {
+        if (text == null || text.isEmpty()) {
+            throw new IllegalArgumentException(message);
         }
-        this.lastName = lastName;
+        return text;
     }
 }
