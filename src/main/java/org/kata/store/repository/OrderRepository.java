@@ -13,5 +13,6 @@ import org.kata.store.domain.Order;
 public interface OrderRepository {
 
     void save(Order order);
+    Order findById(String id);
     
 }

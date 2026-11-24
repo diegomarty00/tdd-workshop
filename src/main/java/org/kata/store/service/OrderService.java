@@ -1,6 +1,7 @@
 package org.kata.store.service;
 
 import org.kata.store.domain.Order;
+import org.kata.store.domain.OrderStatus;
 import org.kata.store.repository.*;
 
 /*
@@ -34,6 +35,12 @@ public class OrderService {
         Order order = new Order(orderId, userId, price);
         orderRepository.save(order);
         return order;
+    }
+
+    public void changeStatus(String orderId, OrderStatus newStatus) {
+        Order order = orderRepository.findById(orderId);
+        order.changeStatusTo(newStatus);
+        orderRepository.save(order);
     }
 
 }
