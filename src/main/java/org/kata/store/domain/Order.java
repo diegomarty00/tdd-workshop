@@ -21,12 +21,9 @@ public class Order {
     private double price;
 
     public Order(String id, String userId, double price) {
-        if (price <= 0) {
-            throw new IllegalArgumentException("Price must be greater than 0");
-        }
         this.id = id;
         this.userId = userId;
-        this.price = price;
+        setPrice(price);
         this.status = OrderStatus.DRAFT;
     }
 
@@ -44,6 +41,13 @@ public class Order {
 
     public double getPrice() {
         return price;
+    }
+
+    private void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Price must be greater than 0");
+        }
+        this.price = price;
     }
 
     public void changeStatusTo(OrderStatus newStatus) {
