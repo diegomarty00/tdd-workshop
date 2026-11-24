@@ -2,6 +2,8 @@ package org.kata.store.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -72,5 +74,18 @@ class OrderServiceTest {
         // Assert
         assertEquals(OrderStatus.DRAFT, order.getStatus());
         verify(orderRepository).save(order);
+    }
+
+    @Test
+    void shouldNotSaveOrderWhenUserDoesNotExist() {
+        // Arrange
+        when(userRepository.exists("user-1")).thenReturn(false);
+
+        // Act
+        assertThrows(IllegalArgumentException.class,
+                () -> orderService.createOrder("order-1", "user-1", 100.0));
+
+        // Assert
+        verify(orderRepository, never()).save(any());
     }
 }
