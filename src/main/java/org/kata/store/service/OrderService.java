@@ -1,5 +1,6 @@
 package org.kata.store.service;
 
+import org.kata.store.domain.Order;
 import org.kata.store.repository.*;
 
 /*
@@ -24,6 +25,13 @@ public class OrderService {
     public OrderService(UserRepository userRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
+    }
+
+    public Order createOrder(String orderId, String userId, double price) {
+        if (!userRepository.exists(userId)) {
+            throw new IllegalArgumentException("User " + userId + " does not exist");
+        }
+        return new Order(orderId, userId, price);
     }
 
 }
