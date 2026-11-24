@@ -36,6 +36,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
  */
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
+
+    private static final String ORDER_ID = "order-1";
+    private static final String USER_ID = "user-1";
+    private static final double VALID_PRICE = 50.0;
+
     @Mock
     private UserRepository userRepository;
 
@@ -52,12 +57,12 @@ class OrderServiceTest {
     @Test
     void shouldRejectOrderForUnknownUser() {
         // Arrange
-        when(userRepository.exists("user-1")).thenReturn(false);
+        when(userRepository.exists(USER_ID)).thenReturn(false);
 
         // Act
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> orderService.createOrder("order-1", "user-1", 100.0));
+                () -> orderService.createOrder(ORDER_ID, USER_ID, VALID_PRICE));
 
         // Assert
         assertEquals("User user-1 does not exist", exception.getMessage());
@@ -66,10 +71,10 @@ class OrderServiceTest {
     @Test
     void shouldCreateOrderInDraftForExistingUser() {
         // Arrange
-        when(userRepository.exists("user-1")).thenReturn(true);
+        when(userRepository.exists(USER_ID)).thenReturn(true);
 
         // Act
-        Order order = orderService.createOrder("order-1", "user-1", 100.0);
+        Order order = orderService.createOrder(ORDER_ID, USER_ID, VALID_PRICE);
 
         // Assert
         assertEquals(OrderStatus.DRAFT, order.getStatus());
@@ -79,11 +84,11 @@ class OrderServiceTest {
     @Test
     void shouldNotSaveOrderWhenUserDoesNotExist() {
         // Arrange
-        when(userRepository.exists("user-1")).thenReturn(false);
+        when(userRepository.exists(USER_ID)).thenReturn(false);
 
         // Act
         assertThrows(IllegalArgumentException.class,
-                () -> orderService.createOrder("order-1", "user-1", 100.0));
+                () -> orderService.createOrder(ORDER_ID, USER_ID, VALID_PRICE));
 
         // Assert
         verify(orderRepository, never()).save(any());
