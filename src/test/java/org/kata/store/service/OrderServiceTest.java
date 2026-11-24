@@ -2,11 +2,14 @@ package org.kata.store.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.kata.store.domain.Order;
+import org.kata.store.domain.OrderStatus;
 import org.kata.store.repository.OrderRepository;
 import org.kata.store.repository.UserRepository;
 import org.mockito.Mock;
@@ -56,5 +59,18 @@ class OrderServiceTest {
 
         // Assert
         assertEquals("User user-1 does not exist", exception.getMessage());
+    }
+
+    @Test
+    void shouldCreateOrderInDraftForExistingUser() {
+        // Arrange
+        when(userRepository.exists("user-1")).thenReturn(true);
+
+        // Act
+        Order order = orderService.createOrder("order-1", "user-1", 100.0);
+
+        // Assert
+        assertEquals(OrderStatus.DRAFT, order.getStatus());
+        verify(orderRepository).save(order);
     }
 }
