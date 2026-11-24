@@ -17,5 +17,9 @@ public enum OrderStatus {
     DRAFT,
     PROCESSED,
     DISPATCHED,
-    DELIVERED
+    DELIVERED;
+
+    boolean canMoveTo(OrderStatus target) {
+        return target.ordinal() == this.ordinal() + 1;
+    }
 }

@@ -47,7 +47,7 @@ public class Order {
         if (status == OrderStatus.DELIVERED) {
             throw new IllegalStateException("Delivered order cannot change status");
         }
-        if (status == OrderStatus.DRAFT && newStatus != OrderStatus.PROCESSED) {
+        if (!status.canMoveTo(newStatus)) {
             throw new IllegalStateException("Cannot change status from " + status + " to " + newStatus);
         }
         this.status = newStatus;
