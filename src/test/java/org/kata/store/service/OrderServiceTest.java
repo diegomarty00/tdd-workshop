@@ -1,5 +1,17 @@
 package org.kata.store.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.kata.store.repository.OrderRepository;
+import org.kata.store.repository.UserRepository;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 /*
  * TODO: Tests unitarios de OrderService con Mockito.
  *
@@ -17,5 +29,32 @@ package org.kata.store.service;
  *   - Stub: la dependencia devuelve un valor fijo y compruebas el resultado (estado).
  *   - Mock: compruebas con verify que el servicio llamó a la dependencia (comportamiento).
  */
+@ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
+    @Mock
+    private UserRepository userRepository;
+
+    @Mock
+    private OrderRepository orderRepository;
+
+    private OrderService orderService;
+
+    @BeforeEach
+    void setUp() {
+        orderService = new OrderService(userRepository, orderRepository);
+    }
+
+    @Test
+    void shouldRejectOrderForUnknownUser() {
+        // Arrange
+        when(userRepository.exists("user-1")).thenReturn(false);
+
+        // Act
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> orderService.createOrder("order-1", "user-1", 100.0));
+
+        // Assert
+        assertEquals("User user-1 does not exist", exception.getMessage());
+    }
 }
