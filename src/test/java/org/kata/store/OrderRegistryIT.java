@@ -5,10 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kata.store.domain.OrderStatus;
-import org.kata.store.repository.OrderRepository;
-import org.kata.store.repository.UserRepository;
-import org.kata.store.service.OrderService;
-import org.kata.store.service.UserService;
+import org.kata.store.repository.*;
+import org.kata.store.repository.memory.*;
+import org.kata.store.service.*;
 
 /*
  * TODO: Prueba de integración (repositorio en memoria obligatorio, TestContainers opcional).
