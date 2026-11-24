@@ -20,8 +20,8 @@ import org.kata.store.repository.*;
  */
 public class OrderService {
 
-    private UserRepository userRepository;
-    private OrderRepository orderRepository;
+    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
 
     public OrderService(UserRepository userRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
@@ -29,9 +29,7 @@ public class OrderService {
     }
 
     public Order createOrder(String orderId, String userId, double price) {
-        if (!userRepository.exists(userId)) {
-            throw new IllegalArgumentException("User " + userId + " does not exist");
-        }
+        checkUserExists(userId);
         Order order = new Order(orderId, userId, price);
         orderRepository.save(order);
         return order;
@@ -41,6 +39,12 @@ public class OrderService {
         Order order = orderRepository.findById(orderId);
         order.changeStatusTo(newStatus);
         orderRepository.save(order);
+    }
+
+    private void checkUserExists(String userId) {
+        if (!userRepository.exists(userId)) {
+            throw new IllegalArgumentException("User " + userId + " does not exist");
+        }
     }
 
 }
