@@ -90,6 +90,20 @@ class PostgresRepositoriesIT {
         assertEquals(OrderStatus.DRAFT, found.getStatus());
     }
 
+    @Test
+    void shouldUpdateStatusOfExistingOrder() {
+        // Arrange
+        Order order = new Order(ORDER_ID, USER_ID, PRICE);
+        orderRepository.save(order);
+        order.changeStatusTo(OrderStatus.PROCESSED);
+
+        // Act
+        orderRepository.save(order);
+
+        // Assert
+        assertEquals(OrderStatus.PROCESSED, orderRepository.findById(ORDER_ID).getStatus());
+    }
+
     private static DataSource dataSource() {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(POSTGRES.getJdbcUrl());
