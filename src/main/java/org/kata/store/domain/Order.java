@@ -25,6 +25,13 @@ public class Order {
         this.status = OrderStatus.DRAFT;
     }
 
+    public Order(String id, String userId, double price, OrderStatus status) {
+        this.id = id;
+        this.userId = userId;
+        setPrice(price);
+        this.status = status;
+    }
+
     public String getId() {
         return id;
     }

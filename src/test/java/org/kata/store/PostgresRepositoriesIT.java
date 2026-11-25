@@ -7,8 +7,7 @@ import org.kata.store.domain.OrderStatus;
 import org.kata.store.domain.User;
 import org.kata.store.repository.OrderRepository;
 import org.kata.store.repository.UserRepository;
-import org.kata.store.repository.postgres.PostgresUserRepository;
-import org.kata.store.service.OrderService;
+import org.kata.store.repository.postgres.*;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -42,6 +41,7 @@ class PostgresRepositoriesIT {
     void setUp() throws SQLException {
         DataSource dataSource = dataSource();
         userRepository = new PostgresUserRepository(dataSource);
+        orderRepository = new PostgresOrderRepository(dataSource);
         cleanTables(dataSource);
     }
 
