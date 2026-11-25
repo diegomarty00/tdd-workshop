@@ -20,6 +20,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PUBLISH_QUIET_P
  *   2. Ejecuta `mvn test`: Cucumber marcará los pasos como undefined y te propondrá el esqueleto de los steps.
  *   3. Crea una clase OrderSteps en este paquete con @Given, @When y @Then.
  */
+@SuppressWarnings("java:S2187")
 @Suite(failIfNoTests = false)
 @IncludeEngines("cucumber")
 @SelectPackages("features")

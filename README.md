@@ -122,3 +122,4 @@ Tienes ejemplos resueltos de Mockito, Cucumber y Testcontainers en la rama `feat
 ## Mi captura de SonarQube
 
 ![Cobertura en SonarQube](SonarQube.png)
+![Cobertura en SonarQube tras opcionales](SonarQubev2.png)

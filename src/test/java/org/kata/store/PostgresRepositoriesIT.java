@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -121,6 +122,31 @@ class PostgresRepositoriesIT {
 
         // Assert
         assertEquals(OrderStatus.DELIVERED, orderRepository.findById(ORDER_ID).getStatus());
+    }
+
+    @Test
+    void shouldReturnNullWhenOrderDoesNotExist() {
+        // Act
+        Order found = orderRepository.findById("unknown-order");
+
+        // Assert
+        assertNull(found);
+    }
+
+    @Test
+    void shouldUpdateExistingOrder() {
+        // Arrange
+        Order order = new Order(ORDER_ID, USER_ID, PRICE);
+        orderRepository.save(order);
+
+        order.changeStatusTo(OrderStatus.PROCESSED);
+
+        // Act
+        orderRepository.save(order);
+        Order found = orderRepository.findById(ORDER_ID);
+
+        // Assert
+        assertEquals(OrderStatus.PROCESSED, found.getStatus());
     }
 
     private static DataSource dataSource() {
