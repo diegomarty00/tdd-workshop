@@ -2,9 +2,13 @@ package org.kata.store;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kata.store.domain.Order;
+import org.kata.store.domain.OrderStatus;
 import org.kata.store.domain.User;
+import org.kata.store.repository.OrderRepository;
 import org.kata.store.repository.UserRepository;
 import org.kata.store.repository.postgres.PostgresUserRepository;
+import org.kata.store.service.OrderService;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -22,14 +26,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Testcontainers(disabledWithoutDocker = true)
 class PostgresRepositoriesIT {
 
+    private static final String ORDER_ID = "order-1";
     private static final String USER_ID = "user-1";
     private static final String FIRST_NAME = "Ana";
     private static final String LAST_NAME = "García";
+    private static final double PRICE = 50.0;
 
     @Container
     static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:16");
 
     private UserRepository userRepository;
+    private OrderRepository orderRepository;
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -65,6 +72,22 @@ class PostgresRepositoriesIT {
         // Assert
         assertTrue(existing);
         assertFalse(unknown);
+    }
+
+    @Test
+    void shouldSaveAndFindOrder() {
+        // Arrange
+        Order order = new Order(ORDER_ID, USER_ID, PRICE);
+
+        // Act
+        orderRepository.save(order);
+        Order found = orderRepository.findById(ORDER_ID);
+
+        // Assert
+        assertEquals(ORDER_ID, found.getId());
+        assertEquals(USER_ID, found.getUserId());
+        assertEquals(PRICE, found.getPrice());
+        assertEquals(OrderStatus.DRAFT, found.getStatus());
     }
 
     private static DataSource dataSource() {
