@@ -19,10 +19,7 @@ public class Order {
     private double price;
 
     public Order(String id, String userId, double price) {
-        this.id = id;
-        this.userId = userId;
-        setPrice(price);
-        this.status = OrderStatus.DRAFT;
+        this(id, userId, price, OrderStatus.DRAFT);
     }
 
     public Order(String id, String userId, double price, OrderStatus status) {
