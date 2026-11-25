@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Testcontainers(disabledWithoutDocker = true)
 class PostgresRepositoriesIT {
@@ -51,6 +53,20 @@ class PostgresRepositoriesIT {
         assertEquals(LAST_NAME, found.getLastName());
     }
 
+    @Test
+    void shouldTellIfUserExists() {
+        // Arrange
+        userRepository.save(new User(USER_ID, FIRST_NAME, LAST_NAME));
+
+        // Act
+        boolean existing = userRepository.exists(USER_ID);
+        boolean unknown = userRepository.exists("unknown-user");
+
+        // Assert
+        assertTrue(existing);
+        assertFalse(unknown);
+    }
+
     private static DataSource dataSource() {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(POSTGRES.getJdbcUrl());
@@ -61,7 +77,7 @@ class PostgresRepositoriesIT {
 
     private static void cleanTables(DataSource dataSource) throws SQLException {
         try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
+                Statement statement = connection.createStatement()) {
             statement.execute("TRUNCATE TABLE users");
         }
     }
