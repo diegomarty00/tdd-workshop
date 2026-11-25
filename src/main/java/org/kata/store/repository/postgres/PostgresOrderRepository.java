@@ -22,7 +22,9 @@ public class PostgresOrderRepository implements OrderRepository {
 
     @Override
     public void save(Order order) {
-        String sql = "INSERT INTO orders (id, user_id, price, status) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO orders (id, user_id, price, status) VALUES (?, ?, ?, ?) "
+            + "ON CONFLICT (id) DO UPDATE SET "
+            + "user_id = EXCLUDED.user_id, price = EXCLUDED.price, status = EXCLUDED.status";
         try (Connection connection = dataSource.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, order.getId());

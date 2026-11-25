@@ -8,6 +8,8 @@ import org.kata.store.domain.User;
 import org.kata.store.repository.OrderRepository;
 import org.kata.store.repository.UserRepository;
 import org.kata.store.repository.postgres.*;
+import org.kata.store.service.OrderService;
+import org.kata.store.service.UserService;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -102,6 +104,23 @@ class PostgresRepositoriesIT {
 
         // Assert
         assertEquals(OrderStatus.PROCESSED, orderRepository.findById(ORDER_ID).getStatus());
+    }
+
+    @Test
+    void shouldTakeOrderFromDraftToDeliveredStoredInPostgres() {
+        // Arrange
+        UserService userService = new UserService(userRepository);
+        OrderService orderService = new OrderService(userRepository, orderRepository);
+        userService.register(USER_ID, FIRST_NAME, LAST_NAME);
+        orderService.createOrder(ORDER_ID, USER_ID, PRICE);
+
+        // Act
+        orderService.changeStatus(ORDER_ID, OrderStatus.PROCESSED);
+        orderService.changeStatus(ORDER_ID, OrderStatus.DISPATCHED);
+        orderService.changeStatus(ORDER_ID, OrderStatus.DELIVERED);
+
+        // Assert
+        assertEquals(OrderStatus.DELIVERED, orderRepository.findById(ORDER_ID).getStatus());
     }
 
     private static DataSource dataSource() {
